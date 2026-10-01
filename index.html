@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Seru Vibes Bandung & Persib 💙⚽</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #002b66;
+            background-image: radial-gradient(#004099 2px, transparent 2px);
+            background-size: 24px 24px;
+            color: #111;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 720px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            background: #ffffff;
+            border: 4px solid #000000;
+            border-radius: 20px;
+            padding: 28px 24px;
+            box-shadow: 8px 8px 0px #000000;
+            animation: fadeIn 0.3s ease-in-out;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* HEADER & LOGO PERSIB */
+        .header-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0044cc;
+            color: #ffffff;
+            padding: 12px 18px;
+            border: 3px solid #000000;
+            border-radius: 14px;
+            box-shadow: 4px 4px 0px #000000;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .persib-logo-container {
+            width: 44px;
+            height: 52px;
+            background: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 6px 6px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 2px 2px 0px #000000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .persib-stars {
+            font-size: 8px;
+            color: #ffcc00;
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        .persib-shield {
+            width: 26px;
+            height: 28px;
+            background: linear-gradient(135deg, #0044cc 50%, #ffcc00 50%);
+            border: 1.5px solid #000000;
+            border-radius: 2px 2px 10px 10px;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .persib-text {
+            font-size: 6px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 1px 1px 0px #000;
+        }
+
+        .slide-badge {
+            background: #ffcc00;
+            color: #000000;
+            display: inline-block;
+            padding: 4px 12px;
+            border: 2px solid #000000;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            box-shadow: 2px 2px 0px #000000;
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 800;
+            line-height: 1.5;
+            color: #002b66;
+            margin-bottom: 18px;
+        }
+
+        /* OPTIONS BUTTONS */
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .opt-btn {
+            width: 100%;
+            background: #f0f6ff;
+            color: #000000;
+            border: 3px solid #000000;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #000000;
+            transition: all 0.1s;
+        }
+
+        .opt-btn:hover {
+            background: #e0edff;
+        }
+
+        .opt-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        .feedback-msg {
+            margin-top: 16px;
+            font-weight: 800;
+            font-size: 1rem;
+            min-height: 24px;
+        }
+
+        /* NAVIGATION BAR */
+        .nav-controls {
+            width: 100%;
+            max-width: 720px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            background: #ffffff;
+            border: 4px solid #000000;
+            border-radius: 16px;
+            padding: 10px 18px;
+            box-shadow: 6px 6px 0px #000000;
+        }
+
+        .nav-btn {
+            background: #ffcc00;
+            color: #000000;
+            border: 3px solid #000000;
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #000000;
+            user-select: none;
+        }
+
+        .nav-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .nav-btn:not(:disabled):active {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #000000;
+        }
+
+        .slide-indicator {
+            font-weight: 900;
+            font-size: 1rem;
+            color: #002b66;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+
+        <!-- SLIDE 1: KULINER -->
+        <div class="slide active" id="slide-0">
+            <div class="header-box">
+                <span class="header-title">PARIS VAN JAVA KUIS</span>
+                <div class="persib-logo-container" title="Persib Bandung">
+                    <div class="persib-stars">★ ★</div>
+                    <div class="persib-shield">
+                        <span class="persib-text">PERSIB</span>
+                    </div>
+                </div>
+            </div>
+            <span class="slide-badge">SLIDE 1 / 5 • KULINER BANDUNG</span>
+            <div class="question-text">
+                Jajanan khas Bandung berbahan dasar aci yang disiram bumbu kacang gurih pedas dan disajikan pakai mangkuk dinamakan...
+            </div>
+            <div class="options-group">
+                <button class="opt-btn" onclick="checkQuiz(0, false)">A. Cilung (Aci Gulung)</button>
+                <button class="opt-btn" onclick="checkQuiz(0, true)">B. Cilok (Aci Dicolok)</button>
+                <button class="opt-btn" onclick="checkQuiz(0, false)">C. Cimol (Aci Digemol)</button>
+            </div>
+            <div class="feedback-msg" id="feedback-0"></div>
+        </div>
+
+        <!-- SLIDE 2: PERSIB & SEJARAH -->
+        <div class="slide" id="slide-1">
+            <div class="header-box">
+                <span class="header-title">MAUNG BANDUNG</span>
+                <div class="persib-logo-container" title="Persib Bandung">
+                    <div class="persib-stars">★ ★</div>
+                    <div class="persib-shield">
+                        <span class="persib-text">PERSIB</span>
+                    </div>
+                </div>
+            </div>
+            <span class="slide-badge" style="background:#0044cc; color:#fff;">SLIDE 2 / 5 • KEBANGGAAN JABAR</span>
+            <div class="question-text">
+                Julukan kebanggaan bagi tim sepak bola Persib Bandung dan nama suporter setianya adalah...
+            </div>
+            <div class="options-group">
+                <button class="opt-btn" onclick="checkQuiz(1, false)">A. Macan Kemayoran & Jakmania</button>
+                <button class="opt-btn" onclick="checkQuiz(1, true)">B. Maung Bandung & Bobotoh</button>
+                <button class="opt-btn" onclick="checkQuiz(1, false)">C. Singo Edan & Aremania</button>
+            </div>
+            <div class="feedback-msg" id="feedback-1"></div>
+        </div>
+
+        <!-- SLIDE 3: ICONIC LANDMARK -->
+        <div class="slide" id="slide-2">
+            <div class="header-box">
+                <span class="header-title">DESTINASI ICONIC</span>
+                <div class="persib-logo-container" title="Persib Bandung">
+                    <div class="persib-stars">★ ★</div>
+                    <div class="persib-shield">
+                        <span class="persib-text">PERSIB</span>
+                    </div>
+                </div>
+            </div>
+            <span class="slide-badge">SLIDE 3 / 5 • LANDMARK CITY</span>
+            <div class="question-text">
+                Gedung bersejarah di Kota Bandung yang identik dengan ornamen tusuk sate di puncak atapnya adalah...
+            </div>
+            <div class="options-group">
+                <button class="opt-btn" onclick="checkQuiz(2, true)">A. Gedung Sate</button>
+                <button class="opt-btn" onclick="checkQuiz(2, false)">B. Gedung Merdeka</button>
+                <button class="opt-btn" onclick="checkQuiz(2, false)">C. Villa Isola</button>
+            </div>
+            <div class="feedback-msg" id="feedback-2"></div>
+        </div>
+
+        <!-- SLIDE 4: VIBES WISATA ALAM -->
+        <div class="slide" id="slide-3">
+            <div class="header-box">
+                <span class="header-title">WISATA BANDUNG</span>
+                <div class="persib-logo-container" title="Persib Bandung">
+                    <div class="persib-stars">★ ★</div>
+                    <div class="persib-shield">
+                        <span class="persib-text">PERSIB</span>
+                    </div>
+                </div>
+            </div>
+            <span class="slide-badge" style="background:#0044cc; color:#fff;">SLIDE 4 / 5 • ALAM SEJUK</span>
+            <div class="question-text">
+                Kawasan pegunungan sejuk di utara Bandung yang terkenal dengan kebun teh, Floating Market, dan Tangkuban Perahu adalah...
+            </div>
+            <div class="options-group">
+                <button class="opt-btn" onclick="checkQuiz(3, false)">A. Ciwidey</button>
+                <button class="opt-btn" onclick="checkQuiz(3, true)">B. Lembang</button>
+                <button class="opt-btn" onclick="checkQuiz(3, false)">C. Pangalengan</button>
+            </div>
+            <div class="feedback-msg" id="feedback-3"></div>
+        </div>
+
+        <!-- SLIDE 5: BAHASA SUNDA / GAUL -->
+        <div class="slide" id="slide-4">
+            <div class="header-box">
+                <span class="header-title">BAHASA SUNDA</span>
+                <div class="persib-logo-container" title="Persib Bandung">
+                    <div class="persib-stars">★ ★</div>
+                    <div class="persib-shield">
+                        <span class="persib-text">PERSIB</span>
+                    </div>
+                </div>
+            </div>
+            <span class="slide-badge">SLIDE 5 / 5 • BOGOH KA BANDUNG</span>
+            <div class="question-text">
+                Kata sapaan akrab khas Bandung/Sunda yang sering digunakan untuk memanggil teman laki-laki adalah...
+            </div>
+            <div class="options-group">
+                <button class="opt-btn" onclick="checkQuiz(4, false)">A. Cik</button>
+                <button class="opt-btn" onclick="checkQuiz(4, false)">B. Bli</button>
+                <button class="opt-btn" onclick="checkQuiz(4, true)">C. Euy / Kang / Aep</button>
+            </div>
+            <div class="feedback-msg" id="feedback-4"></div>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="moveSlide(-1)" disabled>❮ Kembali</button>
+        <div class="slide-indicator" id="slideIndicator">1 / 5</div>
+        <button class="nav-btn" id="nextBtn" onclick="moveSlide(1)">Lanjut ❯</button>
+    </div>
+
+    <script>
+        var currentSlide = 0;
+        var totalSlides = 5;
+
+        function updateSlide() {
+            for (var i = 0; i < totalSlides; i++) {
+                var slideEl = document.getElementById('slide-' + i);
+                if (i === currentSlide) {
+                    slideEl.classList.add('active');
+                } else {
+                    slideEl.classList.remove('active');
+                }
+            }
+
+            document.getElementById('slideIndicator').innerText = (currentSlide + 1) + ' / ' + totalSlides;
+            document.getElementById('prevBtn').disabled = (currentSlide === 0);
+            document.getElementById('nextBtn').disabled = (currentSlide === totalSlides - 1);
+        }
+
+        function moveSlide(dir) {
+            var target = currentSlide + dir;
+            if (target >= 0 && target < totalSlides) {
+                currentSlide = target;
+                updateSlide();
+            }
+        }
+
+        // NAVIGASI KEYBOARD PANAH KIRI & KANAN
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') moveSlide(1);
+            if (e.key === 'ArrowLeft') moveSlide(-1);
+        });
+
+        // FUNGSI CEK JAWABAN KUIS
+        function checkQuiz(slideIdx, isCorrect) {
+            var fb = document.getElementById('feedback-' + slideIdx);
+            if (isCorrect) {
+                fb.style.color = '#008800';
+                fb.innerText = '✅ Muhun bener pisan! Jawaban kamu tepat 💯';
+            } else {
+                fb.style.color = '#cc0000';
+                fb.innerText = '❌ Tetot! Masih kurang tepat, ayo coba lagi!';
+            }
+        }
+
+        window.onload = function() {
+            updateSlide();
+        };
+    </script>
+</body>
+</html>
